@@ -1504,7 +1504,7 @@ var ExtensionBlocks = /*#__PURE__*/function () {
     value: function connectRobohon(args) {
       this._RobohonIp = cast.toString(args.IPADDR);
 
-      if (this._RobohonIp === 'beas-lab') {
+      if (this._RobohonIp === 'bears-lab') {
         this.ws = new WebSocket('wss://bears-lab.org/ws/');
       } else {
         this.ws = new WebSocket('ws://' + this._RobohonIp + ':5001');
@@ -1541,10 +1541,9 @@ var ExtensionBlocks = /*#__PURE__*/function () {
     key: "sendMessage",
     value: function sendMessage(args) {
       this.ws.send("V:".concat(args.MESSAGE));
-      this._RobohonStatus = 'Robohon Speaking...';
-
-      while (this._RobohonStatus !== 'Completed!') {// nothing
-      }
+      this._RobohonStatus = 'Robohon Speaking...'; //while (this._RobohonStatus !== 'Completed!') {
+      //    // nothing
+      //}
     }
   }, {
     key: "doDance",
