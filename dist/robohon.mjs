@@ -1503,7 +1503,13 @@ var ExtensionBlocks = /*#__PURE__*/function () {
     key: "connectRobohon",
     value: function connectRobohon(args) {
       this._RobohonIp = cast.toString(args.IPADDR);
-      this.ws = new WebSocket('ws://' + this._RobohonIp + ':5001');
+
+      if (this._RobohonIp === 'beas-lab') {
+        this.ws = new WebSocket('wss://bears-lab.org/ws/');
+      } else {
+        this.ws = new WebSocket('ws://' + this._RobohonIp + ':5001');
+      }
+
       log.log('WebSocket Server : ' + this._RobohonIp); // on open
 
       this.ws.onopen = function (e) {
@@ -1526,8 +1532,8 @@ var ExtensionBlocks = /*#__PURE__*/function () {
       this.ws.onmessage = function (e) {
         log.log('message: ' + e.data);
 
-        if (e.data.indexOf('終了しました。') != -1) {
-          self._RobohonStatus = 'Completed';
+        if (e.data.indexOf('Completed!') != -1) {
+          self._RobohonStatus = 'Completed!';
         }
       };
     }
@@ -1536,6 +1542,9 @@ var ExtensionBlocks = /*#__PURE__*/function () {
     value: function sendMessage(args) {
       this.ws.send("V:".concat(args.MESSAGE));
       this._RobohonStatus = 'Robohon Speaking...';
+
+      while (this._RobohonStatus !== 'Completed!') {// nothing
+      }
     }
   }, {
     key: "doDance",
