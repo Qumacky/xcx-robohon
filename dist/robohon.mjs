@@ -1463,6 +1463,11 @@ var ExtensionBlocks = /*#__PURE__*/function () {
               defaultValue: " "
             }
           }
+        }, {
+          opcode: 'waitToFinish',
+          blockType: blockType.COMMAND,
+          text: '終わるまで待つ',
+          func: 'waitToFinish'
         }, '---', {
           opcode: 'getRobohonIp',
           text: 'RoBoHoN IP',
@@ -1541,9 +1546,8 @@ var ExtensionBlocks = /*#__PURE__*/function () {
     key: "sendMessage",
     value: function sendMessage(args) {
       this.ws.send("V:".concat(args.MESSAGE));
-      this._RobohonStatus = 'Robohon Speaking...'; //while (this._RobohonStatus !== 'Completed!') {
-      //    // nothing
-      //}
+      this._RobohonStatus = 'Robohon Speaking...';
+      this.waitToFinish();
     }
   }, {
     key: "doDance",
@@ -1562,6 +1566,12 @@ var ExtensionBlocks = /*#__PURE__*/function () {
     value: function doAction(args) {
       this.ws.send("A:".concat(args.ACTION));
       this._RobohonStatus = 'Robohon Acting...';
+    }
+  }, {
+    key: "waitToFinish",
+    value: function waitToFinish() {
+      while (this.getRobohonStatus() !== 'Completed!') {// nothing
+      }
     } // ajaxRequest(args) {
     //     const ajaxPromise = new Promise(resolve => {
     //         //const message = Cast.toString(args.TEXT);
