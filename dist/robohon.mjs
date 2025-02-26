@@ -1570,7 +1570,7 @@ var ExtensionBlocks = /*#__PURE__*/function () {
   }, {
     key: "waitToFinish",
     value: function waitToFinish() {
-      while (this.getRobohonStatus() !== 'Completed!') {// nothing
+      while (this.getRobohonStatus().indexOf('Completed!') == -1) {// nothing
       }
     } // ajaxRequest(args) {
     //     const ajaxPromise = new Promise(resolve => {
