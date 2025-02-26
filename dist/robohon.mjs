@@ -1542,9 +1542,6 @@ var ExtensionBlocks = /*#__PURE__*/function () {
     value: function sendMessage(args) {
       this.ws.send("V:".concat(args.MESSAGE));
       this._RobohonStatus = 'Robohon Speaking...';
-
-      while (this.getRobohonStatus() !== 'Completed!') {//pass
-      }
     }
   }, {
     key: "doDance",
