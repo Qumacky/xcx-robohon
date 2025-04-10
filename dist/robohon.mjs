@@ -1515,7 +1515,7 @@ var ExtensionBlocks = /*#__PURE__*/function () {
         menus: {
           langTypeMenu: {
             acceptReporters: false,
-            items: ['日本語', '英語', '中国語', '韓国語']
+            items: ['日本語', '英語', '中国語（繁体）', '韓国語']
           }
         }
       };
