@@ -1565,7 +1565,11 @@ var ExtensionBlocks = /*#__PURE__*/function () {
   }, {
     key: "sendLangMessage",
     value: function sendLangMessage(args) {
-      log.log("Language: ".concat(args.LANG)); //this.ws.send(`V:${args.MESSAGE}`);
+      log.log("Language: ".concat(args.LANG));
+      log.log("Message: ".concat(args.MESSAGE)); //const lang = args.LANG;
+      //switch (lang) {
+      //}
+      //this.ws.send(`V:${args.MESSAGE}`);
       //this._RobohonStatus = 'Robohon Speaking...';
     }
   }, {
