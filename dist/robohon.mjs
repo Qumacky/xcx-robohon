@@ -1423,7 +1423,7 @@ var ExtensionBlocks = /*#__PURE__*/function () {
         }, '---', {
           opcode: 'sendLangMessage',
           blockType: blockType.COMMAND,
-          text: '[LANG] で [MESSAGE] を話す',
+          text: '[LANG] で [MESSAGE] と話す',
           func: 'sendLangMessage',
           arguments: {
             LANG: {
@@ -1565,8 +1565,8 @@ var ExtensionBlocks = /*#__PURE__*/function () {
   }, {
     key: "sendLangMessage",
     value: function sendLangMessage(args) {
-      log.log("Language: ".concat(args.LANG));
-      log.log("Message: ".concat(args.MESSAGE));
+      //log.log(`Language: ${args.LANG}`);
+      //log.log(`Message: ${args.MESSAGE}`);
       var lang = args.LANG;
 
       switch (lang) {
@@ -1578,7 +1578,7 @@ var ExtensionBlocks = /*#__PURE__*/function () {
           this.ws.send("V:E:".concat(args.MESSAGE));
           break;
 
-        case '中国語':
+        case '中国語（繁体）':
           this.ws.send("V:C:".concat(args.MESSAGE));
           break;
 
