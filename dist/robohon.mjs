@@ -1421,6 +1421,21 @@ var ExtensionBlocks = /*#__PURE__*/function () {
           text: '認識音声',
           func: 'getSpeech'
         }, '---', {
+          opcode: 'sendLangMessage',
+          blockType: blockType.COMMAND,
+          text: '[LANG] で [MESSAGE] を話す',
+          func: 'sendLangMessage',
+          arguments: {
+            LANG: {
+              type: argumentType.STRING,
+              menu: 'langTypeMenu'
+            },
+            MESSAGE: {
+              type: argumentType.STRING,
+              defaultValue: " "
+            }
+          }
+        }, {
           opcode: 'sendMessage',
           blockType: blockType.COMMAND,
           text: 'メッセージ [MESSAGE]',
@@ -1497,7 +1512,12 @@ var ExtensionBlocks = /*#__PURE__*/function () {
         }
         */
         ],
-        menus: {}
+        menus: {
+          langTypeMenu: {
+            acceptReporters: false,
+            items: ['日本語', '英語', '中国語', '韓国語']
+          }
+        }
       };
     }
   }, {
