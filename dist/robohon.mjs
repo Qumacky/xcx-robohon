@@ -1563,6 +1563,12 @@ var ExtensionBlocks = /*#__PURE__*/function () {
       };
     }
   }, {
+    key: "sendLangMessage",
+    value: function sendLangMessage(args) {
+      log.log("Language: ".concat(args)); //this.ws.send(`V:${args.MESSAGE}`);
+      //this._RobohonStatus = 'Robohon Speaking...';
+    }
+  }, {
     key: "sendMessage",
     value: function sendMessage(args) {
       this.ws.send("V:".concat(args.MESSAGE));
