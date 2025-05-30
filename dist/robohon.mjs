@@ -1479,6 +1479,11 @@ var ExtensionBlocks = /*#__PURE__*/function () {
               defaultValue: " "
             }
           }
+        }, {
+          opcode: 'takePicture',
+          blockType: blockType.COMMAND,
+          text: '写真撮影（メール送信）',
+          func: 'takePicture'
         }, '---', {
           opcode: 'getRobohonIp',
           text: 'RoBoHoN IP',
@@ -1612,6 +1617,12 @@ var ExtensionBlocks = /*#__PURE__*/function () {
     value: function doAction(args) {
       this.ws.send("A:".concat(args.ACTION));
       this._RobohonStatus = 'Robohon Acting...';
+    }
+  }, {
+    key: "takePicture",
+    value: function takePicture(args) {
+      this.ws.send('Take Picture');
+      this._RobohonStatus = 'Robohon Taking Picture...';
     } // ajaxRequest(args) {
     //     const ajaxPromise = new Promise(resolve => {
     //         //const message = Cast.toString(args.TEXT);
