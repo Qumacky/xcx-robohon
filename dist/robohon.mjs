@@ -1411,16 +1411,6 @@ var ExtensionBlocks = /*#__PURE__*/function () {
             }
           }
         }, '---', {
-          opcode: 'startRecognition',
-          blockType: blockType.COMMAND,
-          text: 'PC音声認識開始',
-          func: 'startRecognition'
-        }, {
-          opcode: 'getSpeech',
-          blockType: blockType.REPORTER,
-          text: '認識音声',
-          func: 'getSpeech'
-        }, '---', {
           opcode: 'sendLangMessage',
           blockType: blockType.COMMAND,
           text: '[LANG] で [MESSAGE] と話す',
@@ -1655,25 +1645,6 @@ var ExtensionBlocks = /*#__PURE__*/function () {
     key: "getRobohonStatus",
     value: function getRobohonStatus() {
       return this._RobohonStatus;
-    }
-  }, {
-    key: "startRecognition",
-    value: function startRecognition() {
-      var _this2 = this;
-
-      SpeechRecognition = webkitSpeechRecognition || SpeechRecognition;
-      var recognition = new SpeechRecognition();
-
-      recognition.onresult = function (event) {
-        _this2.speech = event.results[0][0].transcript;
-      };
-
-      recognition.start();
-    }
-  }, {
-    key: "getSpeech",
-    value: function getSpeech() {
-      return this.speech;
     }
   }], [{
     key: "EXTENSION_NAME",
