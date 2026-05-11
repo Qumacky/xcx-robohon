@@ -1374,6 +1374,7 @@ var ExtensionBlocks = /*#__PURE__*/function () {
 
     this._RobohonIp = 'bears-lab';
     this._RobohonStatus = '-';
+    this._RobohonSpeechRecognition = '';
   }
   /*
   doIt (args) {
@@ -1474,15 +1475,31 @@ var ExtensionBlocks = /*#__PURE__*/function () {
           blockType: blockType.COMMAND,
           text: '写真撮影（メール送信）',
           func: 'takePicture'
-        }, '---', {
-          opcode: 'getRobohonIp',
-          text: 'RoBoHoN IP',
+        }, {
+          opcode: 'recognizeSpeech',
+          blockType: blockType.COMMAND,
+          text: 'ロボホン音声認識',
+          func: 'recognizeSpeech'
+        }, '---',
+        /*
+              {
+                  opcode: 'getRobohonIp',
+                  text: 'RoBoHoN IP',
+                  blockType: BlockType.REPORTER,
+                  func: 'getRobohonIp',
+                  arguments: {}
+              },
+              */
+        {
+          opcode: 'getRobohonSpeechRecognition',
+          text: 'ロボホン認識内容',
           blockType: blockType.REPORTER,
-          func: 'getRobohonIp',
+          func: 'getRobohonSpeechRecognition',
           arguments: {}
         }, {
           opcode: 'getRobohonStatus',
-          text: 'RoBoHoN Status',
+          //text: 'RoBoHoN Status',
+          text: 'ロボホン状態',
           blockType: blockType.REPORTER,
           func: 'getRobohonStatus',
           arguments: {}
@@ -1555,6 +1572,11 @@ var ExtensionBlocks = /*#__PURE__*/function () {
         if (e.data.indexOf('Completed!') != -1) {
           self._RobohonStatus = 'Completed!';
         }
+
+        if (e.data.startsWith('ASR:')) {
+          self._RobohonSpeechRecognition = e.data.substring(4);
+          self._RobohonStatus = 'Completed!';
+        }
       };
     }
   }, {
@@ -1613,33 +1635,24 @@ var ExtensionBlocks = /*#__PURE__*/function () {
     value: function takePicture(args) {
       this.ws.send('Take Picture');
       this._RobohonStatus = 'Robohon Taking Picture...';
-    } // ajaxRequest(args) {
-    //     const ajaxPromise = new Promise(resolve => {
-    //         //const message = Cast.toString(args.TEXT);
-    //         const body = `{"msg": "${args.MESSAGE}"}`;
-    //         const url = `http://${this._RobohonIp}:8080/resolve`;
-    //         this._RobohonStatus = 'Robohon Speaking...';
-    //         nets({
-    //             url: url,
-    //             body: body,
-    //             method: "POST",
-    //             headers: {"Content-Type": "application/json; charset=UTF-8"}      
-    //         }, function (err, res, body) {
-    //             //resolve(body);
-    //             //return body;
-    //             //const translated = JSON.parse(body).result;
-    //             //resolve(translated)
-    //             //return translated;
-    //         });
-    //     });
-    //     log.log(args.TEXT);
-    //     //return ajaxPromise;
-    // }
+    }
+  }, {
+    key: "recognizeSpeech",
+    value: function recognizeSpeech(args) {
+      this.ws.send('Recognize Speech');
+      this._RobohonSpeechRecognition = '';
+      this._RobohonStatus = 'Robohon Recognizing Speech...';
+    }
+    /*
+    getRobohonIp() {
+        return this._RobohonIp;
+    }
+    */
 
   }, {
-    key: "getRobohonIp",
-    value: function getRobohonIp() {
-      return this._RobohonIp;
+    key: "getRobohonSpeechRecognition",
+    value: function getRobohonSpeechRecognition() {
+      return this._RobohonSpeechRecognition;
     }
   }, {
     key: "getRobohonStatus",
