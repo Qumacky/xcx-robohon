@@ -1480,6 +1480,11 @@ var ExtensionBlocks = /*#__PURE__*/function () {
           blockType: blockType.COMMAND,
           text: 'ロボホン音声認識',
           func: 'recognizeSpeech'
+        }, {
+          opcode: 'resetRecognizedSpeech',
+          blockType: blockType.COMMAND,
+          text: 'ロボホン音声認識内容をリセット',
+          func: 'resetRecognizedSpeech'
         }, '---',
         /*
               {
@@ -1642,6 +1647,11 @@ var ExtensionBlocks = /*#__PURE__*/function () {
       this.ws.send('Recognize Speech');
       this._RobohonSpeechRecognition = '';
       this._RobohonStatus = 'Robohon Recognizing Speech...';
+    }
+  }, {
+    key: "resetRecognizedSpeech",
+    value: function resetRecognizedSpeech(args) {
+      this._RobohonSpeechRecognition = '';
     }
     /*
     getRobohonIp() {
