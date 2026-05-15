@@ -1471,10 +1471,15 @@ var ExtensionBlocks = /*#__PURE__*/function () {
             }
           }
         }, {
-          opcode: 'takePicture',
+          opcode: 'takePictureAndEmail',
           blockType: blockType.COMMAND,
           text: '写真撮影（メール送信）',
-          func: 'takePicture'
+          func: 'takePictureAndEmail'
+        }, {
+          opcode: 'takePictureWithAI',
+          blockType: blockType.COMMAND,
+          text: '写真撮影（画像説明）',
+          func: 'takePictureWithAI'
         }, {
           opcode: 'recognizeSpeech',
           blockType: blockType.COMMAND,
@@ -1636,9 +1641,15 @@ var ExtensionBlocks = /*#__PURE__*/function () {
       this._RobohonStatus = 'Robohon Acting...';
     }
   }, {
-    key: "takePicture",
-    value: function takePicture(args) {
+    key: "takePictureAndEmail",
+    value: function takePictureAndEmail(args) {
       this.ws.send('Take Picture');
+      this._RobohonStatus = 'Robohon Taking Picture...';
+    }
+  }, {
+    key: "takePictureWithAI",
+    value: function takePictureWithAI(args) {
+      this.ws.send('Take Picture with AI');
       this._RobohonStatus = 'Robohon Taking Picture...';
     }
   }, {
