@@ -1468,7 +1468,7 @@ var ExtensionBlocks = /*#__PURE__*/function () {
             ACTION: {
               type: argumentType.STRING,
               menu: 'actionMenu',
-              defaultValue: " "
+              defaultValue: "1"
             }
           }
         }, {
