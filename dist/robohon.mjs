@@ -1542,7 +1542,7 @@ var ExtensionBlocks = /*#__PURE__*/function () {
           },
           actionMenu: {
             acceptReporters: false,
-            Items: this.getActionMenu()
+            items: this.getActionMenu()
           }
         }
       };
