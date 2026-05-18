@@ -1551,7 +1551,7 @@ var ExtensionBlocks = /*#__PURE__*/function () {
               text: 'こいのぼり',
               value: '1'
             }, {
-              text: '七夕さま',
+              text: '七夕さま（フルコーラス）',
               value: '2'
             }, {
               text: 'うさぎ',
@@ -1563,7 +1563,7 @@ var ExtensionBlocks = /*#__PURE__*/function () {
               text: '一月一日',
               value: '5'
             }, {
-              text: 'ハッピーバースデー',
+              text: 'ハッピーバースデー（フルコーラス）',
               value: '6'
             }, {
               text: '蝶々',
@@ -1572,16 +1572,16 @@ var ExtensionBlocks = /*#__PURE__*/function () {
               text: 'かたつむり',
               value: '8'
             }, {
-              text: '雨降り',
+              text: '雨降り（フルコーラス）',
               value: '9'
             }, {
-              text: '雪やこんこ',
+              text: '雪やこんこ（フルコーラス）',
               value: '10'
             }, {
-              text: '鳩',
+              text: '鳩（フルコーラス）',
               value: '11'
             }, {
-              text: '桃太郎',
+              text: '桃太郎（フルコーラス）',
               value: '12'
             }, {
               text: 'もみじ',
@@ -1590,7 +1590,7 @@ var ExtensionBlocks = /*#__PURE__*/function () {
               text: 'さくら',
               value: '14'
             }, {
-              text: '月',
+              text: '月（フルコーラス）',
               value: '15'
             }, {
               text: 'かもめの水兵さん',
@@ -1599,16 +1599,16 @@ var ExtensionBlocks = /*#__PURE__*/function () {
               text: '我は海の子',
               value: '17'
             }, {
-              text: 'うさぎと亀',
+              text: 'うさぎと亀（フルコーラス）',
               value: '18'
             }, {
-              text: 'どんぐりころころ',
+              text: 'どんぐりころころ（フルコーラス）',
               value: '19'
             }, {
-              text: 'ほたるこい',
+              text: 'ほたるこい（フルコーラス）',
               value: '20'
             }, {
-              text: 'シャボン玉',
+              text: 'シャボン玉（フルコーラス）',
               value: '21'
             }]
           },
