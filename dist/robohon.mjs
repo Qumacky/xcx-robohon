@@ -1547,7 +1547,7 @@ var ExtensionBlocks = /*#__PURE__*/function () {
           },
           songMenu: {
             acceptReporters: false,
-            item: [{
+            items: [{
               text: 'こいのぼり',
               value: '1'
             }, {
