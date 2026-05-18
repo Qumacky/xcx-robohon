@@ -1426,18 +1426,22 @@ var ExtensionBlocks = /*#__PURE__*/function () {
               defaultValue: " "
             }
           }
-        }, {
-          opcode: 'sendMessage',
-          blockType: blockType.COMMAND,
-          text: 'メッセージ [MESSAGE]',
-          func: 'sendMessage',
-          arguments: {
-            MESSAGE: {
-              type: argumentType.STRING,
-              defaultValue: " "
+        },
+        /*
+        {
+            opcode: 'sendMessage',
+            blockType: BlockType.COMMAND,
+            text: 'メッセージ [MESSAGE]',
+            func: 'sendMessage',
+            arguments: {
+                MESSAGE: {
+                    type: ArgumentType.STRING,
+                    defaultValue: " "
+                }
             }
-          }
-        }, {
+        },
+        */
+        {
           opcode: 'doDance',
           blockType: blockType.COMMAND,
           text: 'ダンス番号 [DANCE]',
@@ -1451,18 +1455,19 @@ var ExtensionBlocks = /*#__PURE__*/function () {
         }, {
           opcode: 'doSong',
           blockType: blockType.COMMAND,
-          text: '歌番号 [SONG]',
+          text: '歌 [SONG]',
           func: 'doSong',
           arguments: {
             SONG: {
               type: argumentType.STRING,
-              defaultValue: " "
+              menu: 'songMenu',
+              defaultValue: "1"
             }
           }
         }, {
           opcode: 'doAction',
           blockType: blockType.COMMAND,
-          text: 'アクション番号 [ACTION]',
+          text: 'アクション [ACTION]',
           func: 'doAction',
           arguments: {
             ACTION: {
@@ -1539,6 +1544,73 @@ var ExtensionBlocks = /*#__PURE__*/function () {
           langTypeMenu: {
             acceptReporters: false,
             items: ['日本語', '英語', '中国語（繁体）', '韓国語']
+          },
+          songMenu: {
+            acceptReporters: false,
+            item: [{
+              text: 'こいのぼり',
+              value: '1'
+            }, {
+              text: '七夕さま',
+              value: '2'
+            }, {
+              text: 'うさぎ',
+              value: '3'
+            }, {
+              text: 'ジングルベル',
+              value: '4'
+            }, {
+              text: '一月一日',
+              value: '5'
+            }, {
+              text: 'ハッピーバースデー',
+              value: '6'
+            }, {
+              text: '蝶々',
+              value: '7'
+            }, {
+              text: 'かたつむり',
+              value: '8'
+            }, {
+              text: '雨降り',
+              value: '9'
+            }, {
+              text: '雪やこんこ',
+              value: '10'
+            }, {
+              text: '鳩',
+              value: '11'
+            }, {
+              text: '桃太郎',
+              value: '12'
+            }, {
+              text: 'もみじ',
+              value: '13'
+            }, {
+              text: 'さくら',
+              value: '14'
+            }, {
+              text: '月',
+              value: '15'
+            }, {
+              text: 'かもめの水兵さん',
+              value: '16'
+            }, {
+              text: '我は海の子',
+              value: '17'
+            }, {
+              text: 'うさぎと亀',
+              value: '18'
+            }, {
+              text: 'どんぐりころころ',
+              value: '19'
+            }, {
+              text: 'ほたるこい',
+              value: '20'
+            }, {
+              text: 'シャボン玉',
+              value: '21'
+            }]
           },
           actionMenu: {
             acceptReporters: false,
