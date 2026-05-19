@@ -2204,7 +2204,7 @@ var ExtensionBlocks = /*#__PURE__*/function () {
   }, {
     key: "imageRecognitionWithTM",
     value: function imageRecognitionWithTM(args) {
-      this.ws.send('Recognize image with TM');
+      this.ws.send('Recognize Image with TM');
       this._RobohonStatus = 'Robohon Recognizing Image...';
     }
   }, {
