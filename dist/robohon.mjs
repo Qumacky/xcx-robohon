@@ -1444,12 +1444,13 @@ var ExtensionBlocks = /*#__PURE__*/function () {
         {
           opcode: 'doDance',
           blockType: blockType.COMMAND,
-          text: 'ダンス番号 [DANCE]',
+          text: 'ダンス [DANCE]',
           func: 'doDance',
           arguments: {
             DANCE: {
               type: argumentType.STRING,
-              defaultValue: " "
+              menu: 'danceMenu',
+              defaultValue: "1"
             }
           }
         }, {
@@ -1487,14 +1488,24 @@ var ExtensionBlocks = /*#__PURE__*/function () {
           text: '写真撮影（画像説明）',
           func: 'takePictureWithAI'
         }, {
+          opcode: 'imageRecognitionWithTM',
+          blockType: blockType.COMMAND,
+          text: 'TM画像認識',
+          func: 'imageRecognitionWithTM'
+        }, {
+          opcode: 'poseEstimation',
+          blockType: blockType.COMMAND,
+          text: '姿勢推定',
+          func: 'poseEstimation'
+        }, {
           opcode: 'recognizeSpeech',
           blockType: blockType.COMMAND,
-          text: 'ロボホン音声認識',
+          text: '音声認識開始',
           func: 'recognizeSpeech'
         }, {
           opcode: 'resetRecognizedSpeech',
           blockType: blockType.COMMAND,
-          text: 'ロボホン音声認識内容をリセット',
+          text: '音声認識内容リセット',
           func: 'resetRecognizedSpeech'
         }, '---',
         /*
@@ -1508,7 +1519,7 @@ var ExtensionBlocks = /*#__PURE__*/function () {
               */
         {
           opcode: 'getRobohonSpeechRecognition',
-          text: 'ロボホン認識内容',
+          text: '音声認識内容',
           blockType: blockType.REPORTER,
           func: 'getRobohonSpeechRecognition',
           arguments: {}
@@ -1544,6 +1555,373 @@ var ExtensionBlocks = /*#__PURE__*/function () {
           langTypeMenu: {
             acceptReporters: false,
             items: ['日本語', '英語', '中国語（繁体）', '韓国語']
+          },
+          danceMenu: {
+            acceptReporters: false,
+            items: [{
+              text: 'アイネ・クライネ・ナハトムジーク',
+              value: '1'
+            }, {
+              text: '大きな栗の木の下で',
+              value: '2'
+            }, {
+              text: '阿波踊り',
+              value: '3'
+            }, {
+              text: 'エアギター',
+              value: '4'
+            }, {
+              text: '糸巻きの歌',
+              value: '5'
+            }, {
+              text: '結んで開いて',
+              value: '6'
+            }, {
+              text: 'げんこつ山の狸さん',
+              value: '7'
+            }, {
+              text: '交響曲第９番',
+              value: '8'
+            }, {
+              text: 'ジングルベル',
+              value: '9'
+            }, {
+              text: 'カンフー',
+              value: '10'
+            }, {
+              text: '80年代ディスコ',
+              value: '11'
+            }, {
+              text: 'さくら',
+              value: '12'
+            }, {
+              text: 'ミリタリーマーチ',
+              value: '13'
+            }, {
+              text: 'フラメンコ',
+              value: '14'
+            }, {
+              text: 'フラダンス',
+              value: '15'
+            }, {
+              text: '野球応援',
+              value: '16'
+            }, {
+              text: 'チェッコリ',
+              value: '17'
+            }, {
+              text: '体遊びの歌',
+              value: '18'
+            }, {
+              text: '和太鼓',
+              value: '19'
+            }, {
+              text: 'もろびとこぞりて',
+              value: '20'
+            }, {
+              text: '歌舞伎',
+              value: '21'
+            }, {
+              text: 'くるみ割り人形の行進曲',
+              value: '22'
+            }, {
+              text: 'ひな祭り',
+              value: '23'
+            }, {
+              text: 'ロボホン体操',
+              value: '24'
+            }, {
+              text: '天国と地獄',
+              value: '25'
+            }, {
+              text: '70年代ディスコ',
+              value: '26'
+            }, {
+              text: '我は海の子',
+              value: '27'
+            }, {
+              text: 'ロボホン音頭',
+              value: '28'
+            }, {
+              text: 'エアバイオリン',
+              value: '29'
+            }, {
+              text: 'タップダンス',
+              value: '30'
+            }, {
+              text: 'パラパラ',
+              value: '31'
+            }, {
+              text: 'おめでとうクリスマス',
+              value: '32'
+            }, {
+              text: 'うさぎのダンス',
+              value: '33'
+            }, {
+              text: 'コサックダンス',
+              value: '34'
+            }, {
+              text: '子守唄',
+              value: '35'
+            }, {
+              text: 'チアリーディング',
+              value: '36'
+            }, {
+              text: 'マーチングバンド',
+              value: '37'
+            }, {
+              text: '森のくまさん',
+              value: '38'
+            }, {
+              text: 'ラジオ体操',
+              value: '39'
+            }, {
+              text: 'ロボホンズブートキャンプ',
+              value: '40'
+            }, {
+              text: 'ハカ',
+              value: '41'
+            }, {
+              text: 'ちゃんばらごっこ',
+              value: '42'
+            }, {
+              text: 'ヲタ芸',
+              value: '43'
+            }, {
+              text: 'きよしこの夜',
+              value: '44'
+            }, {
+              text: '春の海',
+              value: '45'
+            }, {
+              text: '白鳥の湖',
+              value: '46'
+            }, {
+              text: 'タンゴ',
+              value: '47'
+            }, {
+              text: '忍者のダンス',
+              value: '48'
+            }, {
+              text: 'インド舞踊',
+              value: '49'
+            }, {
+              text: 'ソーラン節',
+              value: '50'
+            }, {
+              text: 'おべんとうばこのうた',
+              value: '51'
+            }, {
+              text: '太極拳',
+              value: '52'
+            }, {
+              text: 'グーチョキパーでなにつくろう',
+              value: '53'
+            }, {
+              text: 'ロボホン体操第2',
+              value: '54'
+            }, {
+              text: 'ツイスト',
+              value: '55'
+            }, {
+              text: 'ひいらぎかざろう',
+              value: '56'
+            }, {
+              text: '一月一日',
+              value: '57'
+            }, {
+              text: 'リンボーダンス',
+              value: '58'
+            }, {
+              text: '三味線1',
+              value: '59'
+            }, {
+              text: '美しく青きドナウ',
+              value: '60'
+            }, {
+              text: 'ロボホンマーチ',
+              value: '61'
+            }, {
+              text: '結婚行進曲',
+              value: '62'
+            }, {
+              text: '君が代',
+              value: '63'
+            }, {
+              text: 'アイリッシュダンス',
+              value: '64'
+            }, {
+              text: 'ゆりかごの歌',
+              value: '65'
+            }, {
+              text: 'ハロウィン1',
+              value: '66'
+            }, {
+              text: 'ボクササイズ',
+              value: '67'
+            }, {
+              text: 'アメイジング・グレイス',
+              value: '68'
+            }, {
+              text: '越天楽',
+              value: '69'
+            }, {
+              text: 'スケーターズ・ワルツ',
+              value: '70'
+            }, {
+              text: 'モンキーダンス',
+              value: '71'
+            }, {
+              text: '春が来た',
+              value: '72'
+            }, {
+              text: 'ロボホンソング',
+              value: '73'
+            }, {
+              text: '猫ふんじゃった',
+              value: '74'
+            }, {
+              text: 'ヴォーグダンス',
+              value: '75'
+            }, {
+              text: 'エイサー',
+              value: '76'
+            }, {
+              text: '花のワルツ',
+              value: '77'
+            }, {
+              text: 'ハロウィン2',
+              value: '78'
+            }, {
+              text: '三味線2',
+              value: '79'
+            }, {
+              text: 'アヴェマリア',
+              value: '80'
+            }, {
+              text: 'ロボホンのお正月',
+              value: '81'
+            }, {
+              text: '巨大ロボホンのダンス',
+              value: '82'
+            }, {
+              text: '仰げば尊し',
+              value: '83'
+            }, {
+              text: 'チャチャチャ',
+              value: '84'
+            }, {
+              text: 'おさんぽのうた',
+              value: '85'
+            }, {
+              text: 'オクラホマミキサー',
+              value: '86'
+            }, {
+              text: 'オルゴールのダンス',
+              value: '87'
+            }, {
+              text: 'ロボホン踊り唄',
+              value: '88'
+            }, {
+              text: 'ロボホン賛歌',
+              value: '89'
+            }, {
+              text: 'ハロウィン3',
+              value: '90'
+            }, {
+              text: 'トルコ行進曲',
+              value: '91'
+            }, {
+              text: 'The first NOEL',
+              value: '92'
+            }, {
+              text: 'シャープ戦隊ロボレンジャー',
+              value: '93'
+            }, {
+              text: 'まめまき',
+              value: '94'
+            }, {
+              text: 'おすもうのダンス',
+              value: '95'
+            }, {
+              text: '誰も寝てはならぬ',
+              value: '96'
+            }, {
+              text: 'ロボホンルンバ',
+              value: '97'
+            }, {
+              text: 'ジェンカ',
+              value: '98'
+            }, {
+              text: 'ロボホンのこうば',
+              value: '99'
+            }, {
+              text: '炭坑節',
+              value: '100'
+            }, {
+              text: 'タヒチアンダンス',
+              value: '101'
+            }, {
+              text: '魔法使いのダンス',
+              value: '102'
+            }, {
+              text: 'ヒップホップダンス',
+              value: '103'
+            }, {
+              text: 'あらのの果てに',
+              value: '104'
+            }, {
+              text: 'びっくりシンフォニー',
+              value: '105'
+            }, {
+              text: 'あんたがたどこさ',
+              value: '106'
+            }, {
+              text: 'フォーエバーロボホン ボーカルパート',
+              value: '107'
+            }, {
+              text: 'フォーエバーロボホン ギターパート',
+              value: '108'
+            }, {
+              text: 'フォーエバーロボホン ドラムパート',
+              value: '109'
+            }, {
+              text: 'ロボホンポルカ',
+              value: '110'
+            }, {
+              text: '草競馬',
+              value: '111'
+            }, {
+              text: 'ロボ盆ダンス',
+              value: '112'
+            }, {
+              text: '兄弟ロボホン',
+              value: '113'
+            }, {
+              text: '魔法使い2のダンス',
+              value: '114'
+            }, {
+              text: 'ジ・エンターテイナー',
+              value: '115'
+            }, {
+              text: 'もみの木',
+              value: '116'
+            }, {
+              text: 'アルプス一万尺',
+              value: '117'
+            }, {
+              text: 'チアリーディング2',
+              value: '118'
+            }, {
+              text: '北のロボホン',
+              value: '119'
+            }, {
+              text: 'どこかで春が',
+              value: '120'
+            }, {
+              text: 'バースデーソング',
+              value: '121'
+            }]
           },
           songMenu: {
             acceptReporters: false,
@@ -1821,7 +2199,19 @@ var ExtensionBlocks = /*#__PURE__*/function () {
     key: "takePictureWithAI",
     value: function takePictureWithAI(args) {
       this.ws.send('Take Picture with AI');
-      this._RobohonStatus = 'Robohon Taking Picture...';
+      this._RobohonStatus = 'Robohon Taking Picture with AI...';
+    }
+  }, {
+    key: "imageRecognitionWithTM",
+    value: function imageRecognitionWithTM(args) {
+      this.ws.send('Recognize image with TM');
+      this._RobohonStatus = 'Robohon Recognizing Image...';
+    }
+  }, {
+    key: "poseEstimation",
+    value: function poseEstimation(args) {
+      this.ws.send('Estimate Pose from Image');
+      this._RobohonStatus = 'Robohon  Estimating Pose...';
     }
   }, {
     key: "recognizeSpeech",
