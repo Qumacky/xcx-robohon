@@ -1485,7 +1485,7 @@ var ExtensionBlocks = /*#__PURE__*/function () {
         }, {
           opcode: 'takePictureWithAI',
           blockType: blockType.COMMAND,
-          text: '写真撮影（画像説明）',
+          text: '画像説明',
           func: 'takePictureWithAI'
         }, {
           opcode: 'imageRecognitionWithTM',
