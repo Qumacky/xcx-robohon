@@ -1483,10 +1483,16 @@ var ExtensionBlocks = /*#__PURE__*/function () {
           text: '写真撮影（メール送信）',
           func: 'takePictureAndEmail'
         }, {
-          opcode: 'takePictureWithAI',
+          opcode: 'explainImageWithAI',
           blockType: blockType.COMMAND,
-          text: '画像説明',
-          func: 'takePictureWithAI'
+          text: '画像説明 [INSTRUCTION]',
+          func: 'explainImageWithAI',
+          arguments: {
+            INSTRUCTION: {
+              type: argumentType.STRING,
+              defaultValue: " "
+            }
+          }
         }, {
           opcode: 'imageRecognitionWithTM',
           blockType: blockType.COMMAND,
@@ -2196,10 +2202,10 @@ var ExtensionBlocks = /*#__PURE__*/function () {
       this._RobohonStatus = 'Robohon Taking Picture...';
     }
   }, {
-    key: "takePictureWithAI",
-    value: function takePictureWithAI(args) {
-      this.ws.send('Take Picture with AI');
-      this._RobohonStatus = 'Robohon Taking Picture with AI...';
+    key: "explainImageWithAI",
+    value: function explainImageWithAI(args) {
+      this.ws.send("VISION:".concat(args.INSTRUCTION));
+      this._RobohonStatus = 'Robohon Explain Image with AI...';
     }
   }, {
     key: "imageRecognitionWithTM",
