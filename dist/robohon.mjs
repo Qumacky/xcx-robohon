@@ -1490,7 +1490,7 @@ var ExtensionBlocks = /*#__PURE__*/function () {
           arguments: {
             INSTRUCTION: {
               type: argumentType.STRING,
-              defaultValue: " "
+              defaultValue: "この画像に何が写っていますか？"
             }
           }
         }, {
