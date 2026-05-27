@@ -1375,6 +1375,7 @@ var ExtensionBlocks = /*#__PURE__*/function () {
     this._RobohonIp = 'bears-lab';
     this._RobohonStatus = '-';
     this._RobohonSpeechRecognition = '';
+    this._RobohonImageDescription = '';
   }
   /*
   doIt (args) {
@@ -1530,8 +1531,13 @@ var ExtensionBlocks = /*#__PURE__*/function () {
           func: 'getRobohonSpeechRecognition',
           arguments: {}
         }, {
+          opcode: 'getRobohonImageDescription',
+          text: '画像内容',
+          blockType: blockType.REPORTER,
+          func: 'getRobohonImageDescription',
+          arguments: {}
+        }, {
           opcode: 'getRobohonStatus',
-          //text: 'RoBoHoN Status',
           text: 'ロボホン状態',
           blockType: blockType.REPORTER,
           func: 'getRobohonStatus',
@@ -2148,7 +2154,7 @@ var ExtensionBlocks = /*#__PURE__*/function () {
               if (data.type === "listen") {
                 self._RobohonSpeechRecognition = data.text;
               } else if (data.type === "vision") {
-                self._RobohonSpeechRecognition = data.description;
+                self._RobohonImageDescription = data.description;
               }
             } catch (error) {
               console.log("JSON解析エラー:", error.message);
@@ -2254,6 +2260,11 @@ var ExtensionBlocks = /*#__PURE__*/function () {
     key: "getRobohonSpeechRecognition",
     value: function getRobohonSpeechRecognition() {
       return this._RobohonSpeechRecognition;
+    }
+  }, {
+    key: "getRobohonImageDescription",
+    value: function getRobohonImageDescription() {
+      return this._RobohonImageDescription;
     }
   }, {
     key: "getRobohonStatus",
