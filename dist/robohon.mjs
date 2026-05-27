@@ -1998,7 +1998,6 @@ var ExtensionBlocks = /*#__PURE__*/function () {
           },
           actionMenu: {
             acceptReporters: false,
-            //items: this.getActionMenu()
             items: [{
               text: '顔上向き',
               value: '1'
@@ -2132,15 +2131,29 @@ var ExtensionBlocks = /*#__PURE__*/function () {
       var self = this; // the function below is out of the scope
 
       this.ws.onmessage = function (e) {
-        log.log('message: ' + e.data);
+        log.log('message: ' + e.data); // 発話、ダンス、歌、アクションの場合: 'Completed!'
+        // 音声認識の場合: 'Completed! {"status": "ok", "type": "listen", "text": "フィジカルAIって何？"}';
+        // 画像説明の場合: 'Completed! {"status": "ok", "type": "vision", "description": "人が写っています。"}';
 
-        if (e.data.indexOf('Completed!') != -1) {
-          self._RobohonStatus = 'Completed!';
-        }
+        if (e.data.startsWith("Completed!")) {
+          self._RobohonStatus = 'Completed!'; // "Completed!" を除去
 
-        if (e.data.startsWith('ASR:')) {
-          self._RobohonSpeechRecognition = e.data.substring(4);
-          self._RobohonStatus = 'Completed!';
+          var remaining = e.data.replace("Completed!", "").trim(); // JSONがあるか確認
+
+          if (remaining) {
+            try {
+              // JSON解析
+              var data = JSON.parse(remaining); // typeによって取得項目を変更
+
+              if (data.type === "listen") {
+                self._RobohonSpeechRecognition = data.text;
+              } else if (data.type === "vision") {
+                self._RobohonSpeechRecognition = data.description;
+              }
+            } catch (error) {
+              console.log("JSON解析エラー:", error.message);
+            }
+          }
         }
       };
     }
@@ -2246,104 +2259,6 @@ var ExtensionBlocks = /*#__PURE__*/function () {
     key: "getRobohonStatus",
     value: function getRobohonStatus() {
       return this._RobohonStatus;
-    }
-  }, {
-    key: "getActionMenu",
-    value: function getActionMenu() {
-      return [{
-        text: '顔上向き',
-        value: '1'
-      }, {
-        text: '顔下向き',
-        value: '2'
-      }, {
-        text: '顔右向き',
-        value: '3'
-      }, {
-        text: '顔左向き',
-        value: '4'
-      }, {
-        text: '右向き',
-        value: '5'
-      }, {
-        text: '左向き',
-        value: '6'
-      }, {
-        text: '右手挙げ',
-        value: '7'
-      }, {
-        text: '左手挙げ',
-        value: '8'
-      }, {
-        text: '両手挙げ',
-        value: '9'
-      }, {
-        text: '歩き',
-        value: '10'
-      }, {
-        text: '後ろ歩き',
-        value: '11'
-      }, {
-        text: '右歩き',
-        value: '12'
-      }, {
-        text: '左歩き',
-        value: '13'
-      }, {
-        text: '腕立て',
-        value: '14'
-      }, {
-        text: 'ボール蹴り',
-        value: '15'
-      }, {
-        text: '腹筋',
-        value: '16'
-      }, {
-        text: '早歩き',
-        value: '17'
-      }, {
-        text: '逆立ち',
-        value: '18'
-      }, {
-        text: '立つ',
-        value: '19'
-      }, {
-        text: '座る',
-        value: '20'
-      }, {
-        text: 'お出かけ姿勢終了',
-        value: '21'
-      }, {
-        text: '写真ポーズ',
-        value: '22'
-      }, {
-        text: 'メロメロ攻撃',
-        value: '23'
-      }, {
-        text: '青色の目',
-        value: '24'
-      }, {
-        text: '緑色の目',
-        value: '25'
-      }, {
-        text: '黄色の目',
-        value: '26'
-      }, {
-        text: '赤色の目',
-        value: '27'
-      }, {
-        text: '水色の目',
-        value: '28'
-      }, {
-        text: 'ピンク色の目',
-        value: '29'
-      }, {
-        text: '前向き',
-        value: '30'
-      }, {
-        text: '両手下げ',
-        value: '31'
-      }];
     }
   }], [{
     key: "EXTENSION_NAME",
