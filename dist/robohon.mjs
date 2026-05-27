@@ -2235,7 +2235,7 @@ var ExtensionBlocks = /*#__PURE__*/function () {
   }, {
     key: "recognizeSpeech",
     value: function recognizeSpeech(args) {
-      this.ws.send('Recognize Speech');
+      this.ws.send('LISTEN');
       this._RobohonSpeechRecognition = '';
       this._RobohonStatus = 'Robohon Recognizing Speech...';
     }
