@@ -1406,7 +1406,7 @@ var ExtensionBlocks = /*#__PURE__*/function () {
           arguments: {
             RoBoHoNID: {
               type: argumentType.STRING,
-              defaultValue: "RoBoHoN1"
+              menu: 'robohonMen'
             }
           }
         }, '---', {
@@ -1468,6 +1468,10 @@ var ExtensionBlocks = /*#__PURE__*/function () {
           arguments: {}
         }],
         menus: {
+          robohonMenu: {
+            acceptReporters: false,
+            items: ['RoBoHoN1', 'RoBoHoN2']
+          },
           langTypeMenu: {
             acceptReporters: false,
             items: ['日本語', '英語', '中国語（繁体）', '韓国語']
