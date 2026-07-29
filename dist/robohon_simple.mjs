@@ -1368,14 +1368,11 @@ var ExtensionBlocks = /*#__PURE__*/function () {
     if (runtime.formatMessage) {
       // Replace 'formatMessage' to a formatter which is used in the runtime.
       formatMessage = runtime.formatMessage;
-    } // this._RobohonIp = '192.168.x.x';
-    // this._RobohonIp = 'localhost';
-
+    }
 
     this._RobohonIp = 'bears-lab';
     this._RobohonStatus = '-';
-    this._RobohonSpeechRecognition = '';
-    this._RobohonImageDescription = '';
+    this._RobohonID = '';
   }
   /*
   doIt (args) {
@@ -1404,12 +1401,12 @@ var ExtensionBlocks = /*#__PURE__*/function () {
         blocks: [{
           opcode: 'connectRobohon',
           blockType: blockType.COMMAND,
-          text: 'RoBoHoN IP [IPADDR]',
+          text: '[RoBoHoNID]と接続',
           func: 'connectRobohon',
           arguments: {
-            IPADDR: {
+            RoBoHoNID: {
               type: argumentType.STRING,
-              defaultValue: this._RobohonIp
+              defaultValue: "RoBoHoN1"
             }
           }
         }, '---', {
@@ -2014,15 +2011,9 @@ var ExtensionBlocks = /*#__PURE__*/function () {
     value: function connectRobohon(args) {
       var _this = this;
 
-      this._RobohonIp = cast.toString(args.IPADDR);
-
-      if (this._RobohonIp === 'bears-lab') {
-        this.ws = new WebSocket('wss://bears-lab.org/ws/');
-      } else {
-        this.ws = new WebSocket('ws://' + this._RobohonIp + ':5001');
-      }
-
-      log.log('WebSocket Server : ' + this._RobohonIp); // on open
+      this._RobohonID = cast.toString(args.RoBoHoNID);
+      this.ws = new WebSocket('wss://bears-lab.org/ws/');
+      log.log('WebSocket Server: wss://bears-lab.org/ws/'); // on open
 
       this.ws.onopen = function (e) {
         _this.ws.send("Xcratchからこんにちは！");
@@ -2060,46 +2051,40 @@ var ExtensionBlocks = /*#__PURE__*/function () {
 
       switch (lang) {
         case '日本語':
-          this.ws.send("V:J:".concat(args.MESSAGE));
+          this.ws.send("".concat(this._RobohonID, ":V:J:").concat(args.MESSAGE));
           break;
 
         case '英語':
-          this.ws.send("V:E:".concat(args.MESSAGE));
+          this.ws.send("".concat(this._RobohonID, ":V:E:").concat(args.MESSAGE));
           break;
 
         case '中国語（繁体）':
-          this.ws.send("V:C:".concat(args.MESSAGE));
+          this.ws.send("".concat(this._RobohonID, ":V:C:").concat(args.MESSAGE));
           break;
 
         case '韓国語':
-          this.ws.send("V:K:".concat(args.MESSAGE));
+          this.ws.send("".concat(this._RobohonID, ":V:K:").concat(args.MESSAGE));
           break;
       }
 
       this._RobohonStatus = 'Robohon Speaking...';
     }
   }, {
-    key: "sendMessage",
-    value: function sendMessage(args) {
-      this.ws.send("".concat(args.MESSAGE));
-      this._RobohonStatus = 'Robohon Sending Message...';
-    }
-  }, {
     key: "doDance",
     value: function doDance(args) {
-      this.ws.send("D:".concat(args.DANCE));
+      this.ws.send("".concat(this._RobohonID, ":D:").concat(args.DANCE));
       this._RobohonStatus = 'Robohon Dancing...';
     }
   }, {
     key: "doSong",
     value: function doSong(args) {
-      this.ws.send("S:".concat(args.SONG));
+      this.ws.send("".concat(this._RobohonID, ":S:").concat(args.SONG));
       this._RobohonStatus = 'Robohon Singing...';
     }
   }, {
     key: "doAction",
     value: function doAction(args) {
-      this.ws.send("A:".concat(args.ACTION));
+      this.ws.send("".concat(this._RobohonID, ":A:").concat(args.ACTION));
       this._RobohonStatus = 'Robohon Acting...';
     }
   }, {
