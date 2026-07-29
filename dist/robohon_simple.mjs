@@ -1406,7 +1406,7 @@ var ExtensionBlocks = /*#__PURE__*/function () {
           arguments: {
             RoBoHoNID: {
               type: argumentType.STRING,
-              menu: 'robohonMen'
+              menu: 'robohonMenu'
             }
           }
         }, '---', {
