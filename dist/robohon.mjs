@@ -1427,22 +1427,7 @@ var ExtensionBlocks = /*#__PURE__*/function () {
               defaultValue: " "
             }
           }
-        },
-        /*
-        {
-            opcode: 'sendMessage',
-            blockType: BlockType.COMMAND,
-            text: 'メッセージ [MESSAGE]',
-            func: 'sendMessage',
-            arguments: {
-                MESSAGE: {
-                    type: ArgumentType.STRING,
-                    defaultValue: " "
-                }
-            }
-        },
-        */
-        {
+        }, {
           opcode: 'doDance',
           blockType: blockType.COMMAND,
           text: 'ダンス [DANCE]',
@@ -1478,91 +1463,13 @@ var ExtensionBlocks = /*#__PURE__*/function () {
               defaultValue: "1"
             }
           }
-        }, {
-          opcode: 'takePictureAndEmail',
-          blockType: blockType.COMMAND,
-          text: '写真撮影（メール送信）',
-          func: 'takePictureAndEmail'
-        }, {
-          opcode: 'explainImageWithAI',
-          blockType: blockType.COMMAND,
-          text: '画像説明 [INSTRUCTION]',
-          func: 'explainImageWithAI',
-          arguments: {
-            INSTRUCTION: {
-              type: argumentType.STRING,
-              defaultValue: "この画像に何が写っていますか？"
-            }
-          }
-        }, {
-          opcode: 'imageRecognitionWithTM',
-          blockType: blockType.COMMAND,
-          text: 'TM画像認識',
-          func: 'imageRecognitionWithTM'
-        }, {
-          opcode: 'poseEstimation',
-          blockType: blockType.COMMAND,
-          text: '姿勢推定',
-          func: 'poseEstimation'
-        }, {
-          opcode: 'recognizeSpeech',
-          blockType: blockType.COMMAND,
-          text: '音声認識開始',
-          func: 'recognizeSpeech'
-        }, {
-          opcode: 'resetRecognizedSpeech',
-          blockType: blockType.COMMAND,
-          text: '音声認識内容リセット',
-          func: 'resetRecognizedSpeech'
-        }, '---',
-        /*
-              {
-                  opcode: 'getRobohonIp',
-                  text: 'RoBoHoN IP',
-                  blockType: BlockType.REPORTER,
-                  func: 'getRobohonIp',
-                  arguments: {}
-              },
-              */
-        {
-          opcode: 'getRobohonSpeechRecognition',
-          text: '音声認識内容',
-          blockType: blockType.REPORTER,
-          func: 'getRobohonSpeechRecognition',
-          arguments: {}
-        }, {
-          opcode: 'getRobohonImageDescription',
-          text: '画像内容',
-          blockType: blockType.REPORTER,
-          func: 'getRobohonImageDescription',
-          arguments: {}
-        }, {
+        }, '---', {
           opcode: 'getRobohonStatus',
           text: 'ロボホン状態',
           blockType: blockType.REPORTER,
           func: 'getRobohonStatus',
           arguments: {}
-        }
-        /*
-        {
-            opcode: 'do-it',
-            blockType: BlockType.REPORTER,
-            blockAllThreads: false,
-            text: formatMessage({
-                id: 'robohon.doIt',
-                default: 'do it [SCRIPT]',
-                description: 'execute javascript for example'
-            }),
-            func: 'doIt',
-            arguments: {
-                SCRIPT: {
-                    type: ArgumentType.STRING,
-                    defaultValue: '3 + 4'
-                }
-            }
-        }
-        */
-        ],
+        }],
         menus: {
           langTypeMenu: {
             acceptReporters: false,
@@ -2138,28 +2045,9 @@ var ExtensionBlocks = /*#__PURE__*/function () {
 
       this.ws.onmessage = function (e) {
         log.log('message: ' + e.data); // 発話、ダンス、歌、アクションの場合: 'Completed!'
-        // 音声認識の場合: 'Completed! {"status": "ok", "type": "listen", "text": "フィジカルAIって何？"}';
-        // 画像説明の場合: 'Completed! {"status": "ok", "type": "vision", "description": "人が写っています。"}';
 
         if (e.data.startsWith("Completed!")) {
-          self._RobohonStatus = 'Completed!'; // "Completed!" を除去
-
-          var remaining = e.data.replace("Completed!", "").trim(); // JSONがあるか確認
-
-          if (remaining) {
-            try {
-              // JSON解析
-              var data = JSON.parse(remaining); // typeによって取得項目を変更
-
-              if (data.type === "listen") {
-                self._RobohonSpeechRecognition = data.text;
-              } else if (data.type === "vision") {
-                self._RobohonImageDescription = data.description;
-              }
-            } catch (error) {
-              console.log("JSON解析エラー:", error.message);
-            }
-          }
+          self._RobohonStatus = 'Completed!';
         }
       };
     }
@@ -2213,58 +2101,6 @@ var ExtensionBlocks = /*#__PURE__*/function () {
     value: function doAction(args) {
       this.ws.send("A:".concat(args.ACTION));
       this._RobohonStatus = 'Robohon Acting...';
-    }
-  }, {
-    key: "takePictureAndEmail",
-    value: function takePictureAndEmail(args) {
-      this.ws.send('Take Picture');
-      this._RobohonStatus = 'Robohon Taking Picture...';
-    }
-  }, {
-    key: "explainImageWithAI",
-    value: function explainImageWithAI(args) {
-      this.ws.send("VISION:".concat(args.INSTRUCTION));
-      this._RobohonStatus = 'Robohon Explain Image with AI...';
-    }
-  }, {
-    key: "imageRecognitionWithTM",
-    value: function imageRecognitionWithTM(args) {
-      this.ws.send('Recognize Image with TM');
-      this._RobohonStatus = 'Robohon Recognizing Image...';
-    }
-  }, {
-    key: "poseEstimation",
-    value: function poseEstimation(args) {
-      this.ws.send('Estimate Pose from Image');
-      this._RobohonStatus = 'Robohon  Estimating Pose...';
-    }
-  }, {
-    key: "recognizeSpeech",
-    value: function recognizeSpeech(args) {
-      this.ws.send('LISTEN');
-      this._RobohonSpeechRecognition = '';
-      this._RobohonStatus = 'Robohon Recognizing Speech...';
-    }
-  }, {
-    key: "resetRecognizedSpeech",
-    value: function resetRecognizedSpeech(args) {
-      this._RobohonSpeechRecognition = '';
-    }
-    /*
-    getRobohonIp() {
-        return this._RobohonIp;
-    }
-    */
-
-  }, {
-    key: "getRobohonSpeechRecognition",
-    value: function getRobohonSpeechRecognition() {
-      return this._RobohonSpeechRecognition;
-    }
-  }, {
-    key: "getRobohonImageDescription",
-    value: function getRobohonImageDescription() {
-      return this._RobohonImageDescription;
     }
   }, {
     key: "getRobohonStatus",
