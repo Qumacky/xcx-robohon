@@ -1841,6 +1841,12 @@ var ExtensionBlocks = /*#__PURE__*/function () {
             }, {
               text: 'バースデーソング',
               value: '121'
+            }, {
+              text: 'ロボホンサンバ',
+              value: '122'
+            }, {
+              text: 'エアギター2',
+              value: '123'
             }]
           },
           songMenu: {
@@ -2041,7 +2047,7 @@ var ExtensionBlocks = /*#__PURE__*/function () {
       this.ws.onmessage = function (e) {
         log.log('message: ' + e.data); // 発話、ダンス、歌、アクションの場合: 'Completed!'
 
-        if (e.data.startsWith("".concat(_this._RobohonID, ":Completed!"))) {
+        if (e.data.includes(_this._RobohonID) && e.data.includes("Completed!")) {
           self._RobohonStatus = 'Completed!';
         }
       };
