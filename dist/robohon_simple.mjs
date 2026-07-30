@@ -2041,7 +2041,7 @@ var ExtensionBlocks = /*#__PURE__*/function () {
       this.ws.onmessage = function (e) {
         log.log('message: ' + e.data); // 発話、ダンス、歌、アクションの場合: 'Completed!'
 
-        if (e.data.startsWith(_this._RobohonID + ":Completed!")) {
+        if (e.data.startsWith("".concat(_this._RobohonID, ":Completed!"))) {
           self._RobohonStatus = 'Completed!';
         }
       };
