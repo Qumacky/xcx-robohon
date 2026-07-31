@@ -1847,6 +1847,9 @@ var ExtensionBlocks = /*#__PURE__*/function () {
             }, {
               text: 'エアギター2',
               value: '123'
+            }, {
+              text: '般若心経',
+              value: '124'
             }]
           },
           songMenu: {

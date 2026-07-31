@@ -1368,24 +1368,14 @@ var ExtensionBlocks = /*#__PURE__*/function () {
     if (runtime.formatMessage) {
       // Replace 'formatMessage' to a formatter which is used in the runtime.
       formatMessage = runtime.formatMessage;
-    } // this._RobohonIp = '192.168.x.x';
-    // this._RobohonIp = 'localhost';
-
+    }
 
     this._RobohonIp = 'bears-lab';
     this._RobohonStatus = '-';
+    this._RobohonID = '';
     this._RobohonSpeechRecognition = '';
     this._RobohonImageDescription = '';
   }
-  /*
-  doIt (args) {
-      const func = new Function(`return (${Cast.toString(args.SCRIPT)})`);
-      const result = func.call(this);
-      console.log(result);
-      return result;
-  }
-  */
-
   /**
    * @returns {object} metadata for this extension and its blocks.
    */
@@ -1404,12 +1394,12 @@ var ExtensionBlocks = /*#__PURE__*/function () {
         blocks: [{
           opcode: 'connectRobohon',
           blockType: blockType.COMMAND,
-          text: 'RoBoHoN IP [IPADDR]',
+          text: '[RoBoHoNID]と接続',
           func: 'connectRobohon',
           arguments: {
-            IPADDR: {
+            RoBoHoNID: {
               type: argumentType.STRING,
-              defaultValue: this._RobohonIp
+              menu: 'robohonMenu'
             }
           }
         }, '---', {
@@ -1427,22 +1417,7 @@ var ExtensionBlocks = /*#__PURE__*/function () {
               defaultValue: " "
             }
           }
-        },
-        /*
-        {
-            opcode: 'sendMessage',
-            blockType: BlockType.COMMAND,
-            text: 'メッセージ [MESSAGE]',
-            func: 'sendMessage',
-            arguments: {
-                MESSAGE: {
-                    type: ArgumentType.STRING,
-                    defaultValue: " "
-                }
-            }
-        },
-        */
-        {
+        }, {
           opcode: 'doDance',
           blockType: blockType.COMMAND,
           text: 'ダンス [DANCE]',
@@ -1514,17 +1489,7 @@ var ExtensionBlocks = /*#__PURE__*/function () {
           blockType: blockType.COMMAND,
           text: '音声認識内容リセット',
           func: 'resetRecognizedSpeech'
-        }, '---',
-        /*
-        {
-            opcode: 'getRobohonIp',
-            text: 'RoBoHoN IP',
-            blockType: BlockType.REPORTER,
-            func: 'getRobohonIp',
-            arguments: {}
-        },
-        */
-        {
+        }, '---', {
           opcode: 'getRobohonSpeechRecognition',
           text: '音声認識内容',
           blockType: blockType.REPORTER,
@@ -1542,28 +1507,12 @@ var ExtensionBlocks = /*#__PURE__*/function () {
           blockType: blockType.REPORTER,
           func: 'getRobohonStatus',
           arguments: {}
-        }
-        /*
-        {
-            opcode: 'do-it',
-            blockType: BlockType.REPORTER,
-            blockAllThreads: false,
-            text: formatMessage({
-                id: 'robohon.doIt',
-                default: 'do it [SCRIPT]',
-                description: 'execute javascript for example'
-            }),
-            func: 'doIt',
-            arguments: {
-                SCRIPT: {
-                    type: ArgumentType.STRING,
-                    defaultValue: '3 + 4'
-                }
-            }
-        }
-        */
-        ],
+        }],
         menus: {
+          robohonMenu: {
+            acceptReporters: false,
+            items: ['RoBoHoN1', 'RoBoHoN2']
+          },
           langTypeMenu: {
             acceptReporters: false,
             items: ['日本語', '英語', '中国語（繁体）', '韓国語']
@@ -1933,6 +1882,15 @@ var ExtensionBlocks = /*#__PURE__*/function () {
             }, {
               text: 'バースデーソング',
               value: '121'
+            }, {
+              text: 'ロボホンサンバ',
+              value: '122'
+            }, {
+              text: 'エアギター2',
+              value: '123'
+            }, {
+              text: '般若心経',
+              value: '124'
             }]
           },
           songMenu: {
@@ -2107,15 +2065,9 @@ var ExtensionBlocks = /*#__PURE__*/function () {
     value: function connectRobohon(args) {
       var _this = this;
 
-      this._RobohonIp = cast.toString(args.IPADDR);
-
-      if (this._RobohonIp === 'bears-lab') {
-        this.ws = new WebSocket('wss://bears-lab.org/ws/');
-      } else {
-        this.ws = new WebSocket('ws://' + this._RobohonIp + ':5001');
-      }
-
-      log.log('WebSocket Server : ' + this._RobohonIp); // on open
+      this._RobohonID = cast.toString(args.RoBoHoNID);
+      this.ws = new WebSocket('wss://bears-lab.org/ws/');
+      log.log('WebSocket Server: wss://bears-lab.org/ws/'); // on open
 
       this.ws.onopen = function (e) {
         _this.ws.send("Xcratchからこんにちは！");
@@ -2137,14 +2089,14 @@ var ExtensionBlocks = /*#__PURE__*/function () {
       var self = this; // the function below is out of the scope
 
       this.ws.onmessage = function (e) {
-        log.log('message: ' + e.data); // 発話、ダンス、歌、アクションの場合: 'Completed!'
-        // 音声認識の場合: 'Completed! {"status": "ok", "type": "listen", "text": "フィジカルAIって何？"}';
-        // 画像説明の場合: 'Completed! {"status": "ok", "type": "vision", "description": "人が写っています。"}';
+        log.log('message: ' + e.data); // 発話、ダンス、歌、アクションの場合: 'RoBoHoN1:Completed!'
+        // 音声認識の場合: 'RoBoHoN1:Completed! {"status": "ok", "type": "listen", "text": "フィジカルAIって何？"}';
+        // 画像説明の場合: 'RoBoHoN1:Completed! {"status": "ok", "type": "vision", "description": "人が写っています。"}';
 
-        if (e.data.startsWith("Completed!")) {
+        if (e.data.includes(_this._RobohonID) && e.data.includes("Completed!")) {
           self._RobohonStatus = 'Completed!'; // "Completed!" を除去
 
-          var remaining = e.data.replace("Completed!", "").trim(); // JSONがあるか確認
+          var remaining = e.data.replace("".concat(_this._RobohonID, ":Completed!"), "").trim(); // JSONがあるか確認
 
           if (remaining) {
             try {
@@ -2172,76 +2124,70 @@ var ExtensionBlocks = /*#__PURE__*/function () {
 
       switch (lang) {
         case '日本語':
-          this.ws.send("V:J:".concat(args.MESSAGE));
+          this.ws.send("".concat(this._RobohonID, ":V:J:").concat(args.MESSAGE));
           break;
 
         case '英語':
-          this.ws.send("V:E:".concat(args.MESSAGE));
+          this.ws.send("".concat(this._RobohonID, ":V:E:").concat(args.MESSAGE));
           break;
 
         case '中国語（繁体）':
-          this.ws.send("V:C:".concat(args.MESSAGE));
+          this.ws.send("".concat(this._RobohonID, ":V:C:").concat(args.MESSAGE));
           break;
 
         case '韓国語':
-          this.ws.send("V:K:".concat(args.MESSAGE));
+          this.ws.send("".concat(this._RobohonID, ":V:K:").concat(args.MESSAGE));
           break;
       }
 
       this._RobohonStatus = 'Robohon Speaking...';
     }
   }, {
-    key: "sendMessage",
-    value: function sendMessage(args) {
-      this.ws.send("".concat(args.MESSAGE));
-      this._RobohonStatus = 'Robohon Sending Message...';
-    }
-  }, {
     key: "doDance",
     value: function doDance(args) {
-      this.ws.send("D:".concat(args.DANCE));
+      this.ws.send("".concat(this._RobohonID, ":D:").concat(args.DANCE));
       this._RobohonStatus = 'Robohon Dancing...';
     }
   }, {
     key: "doSong",
     value: function doSong(args) {
-      this.ws.send("S:".concat(args.SONG));
+      this.ws.send("".concat(this._RobohonID, ":S:").concat(args.SONG));
       this._RobohonStatus = 'Robohon Singing...';
     }
   }, {
     key: "doAction",
     value: function doAction(args) {
-      this.ws.send("A:".concat(args.ACTION));
+      this.ws.send("".concat(this._RobohonID, ":A:").concat(args.ACTION));
       this._RobohonStatus = 'Robohon Acting...';
     }
   }, {
     key: "takePictureAndEmail",
     value: function takePictureAndEmail(args) {
-      this.ws.send('Take Picture');
+      this.ws.send("".concat(this._RobohonID, ":Take Picture"));
       this._RobohonStatus = 'Robohon Taking Picture...';
     }
   }, {
     key: "explainImageWithAI",
     value: function explainImageWithAI(args) {
-      this.ws.send("VISION:".concat(args.INSTRUCTION));
+      this.ws.send("".concat(this._RobohonID, ":VISION:").concat(args.INSTRUCTION));
       this._RobohonStatus = 'Robohon Explain Image with AI...';
     }
   }, {
     key: "imageRecognitionWithTM",
     value: function imageRecognitionWithTM(args) {
-      this.ws.send('Recognize Image with TM');
+      this.ws.send("".concat(this._RobohonID, ":Recognize Image with TM"));
       this._RobohonStatus = 'Robohon Recognizing Image...';
     }
   }, {
     key: "poseEstimation",
     value: function poseEstimation(args) {
-      this.ws.send('Estimate Pose from Image');
+      this.ws.send("".concat(this._RobohonID, ":Estimate Pose from Image"));
       this._RobohonStatus = 'Robohon  Estimating Pose...';
     }
   }, {
     key: "recognizeSpeech",
     value: function recognizeSpeech(args) {
-      this.ws.send('LISTEN');
+      this.ws.send("".concat(this._RobohonID, ":LISTEN"));
       this._RobohonSpeechRecognition = '';
       this._RobohonStatus = 'Robohon Recognizing Speech...';
     }
@@ -2250,12 +2196,6 @@ var ExtensionBlocks = /*#__PURE__*/function () {
     value: function resetRecognizedSpeech(args) {
       this._RobohonSpeechRecognition = '';
     }
-    /*
-    getRobohonIp() {
-        return this._RobohonIp;
-    }
-    */
-
   }, {
     key: "getRobohonSpeechRecognition",
     value: function getRobohonSpeechRecognition() {
